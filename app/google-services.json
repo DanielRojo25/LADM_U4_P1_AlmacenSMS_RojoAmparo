@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "87413979063",
+    "project_id": "u4p1-almacensms",
+    "storage_bucket": "u4p1-almacensms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87413979063:android:e929eef35fd74fba095a32",
+        "android_client_info": {
+          "package_name": "com.example.ladm_u4_p1_almacensms_rojoamparo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87413979063-kg0oloi3jphv3uk3pbdjqre4i4agbco3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUkRqEl5CCN4MDOIzANIoaYg8mRdhEKAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87413979063-kg0oloi3jphv3uk3pbdjqre4i4agbco3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
