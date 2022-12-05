@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.ladm_u4_p1_almacensms_rojoamparo.databinding.ActivityMainBinding
@@ -19,27 +20,15 @@ import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-
-    lateinit var phoneEdt: EditText
-    lateinit var messageEdt: EditText
-    lateinit var sendMsgBtn: Button
-
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        phoneEdt = findViewById(R.id.textTelefono)
-        messageEdt = findViewById(R.id.textMensaje)
-        sendMsgBtn = findViewById(R.id.btnEnviar)
-
-        checkPermissions()
+        revisarPermisos()
 
         binding.btnEnviar.setOnClickListener {
-
-            val phoneNumber = phoneEdt.text.toString()
-            val message = messageEdt.text.toString()
-
             try {
 
                 val smsManager:SmsManager
@@ -50,7 +39,8 @@ class MainActivity : AppCompatActivity() {
                     smsManager = SmsManager.getDefault()
                 }
 
-                smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                smsManager.sendTextMessage(binding.textTelefono.text.toString(), null, binding.textMensaje.text.toString(),
+                    null, null)
 
                 Toast.makeText(this, "Mensaje enviado!", Toast.LENGTH_LONG).show()
 
@@ -58,8 +48,7 @@ class MainActivity : AppCompatActivity() {
 
             } catch (e: Exception) {
 
-                Toast.makeText(this, "Mensaje no enviado.."+e.message.toString(), Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(this, "Mensaje no enviado..", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -72,8 +61,8 @@ class MainActivity : AppCompatActivity() {
         val baseRemota = FirebaseFirestore.getInstance()
 
         val datos = hashMapOf(
-            "NUMERO" to phoneEdt.text.toString(),
-            "MENSAJE" to messageEdt.text.toString(),
+            "NUMERO" to binding.textTelefono.text.toString(),
+            "MENSAJE" to binding.textMensaje.text.toString(),
             "FECHA" to Date()
         )
 
@@ -87,15 +76,12 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun checkPermissions(){
+    private fun revisarPermisos(){
         if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_SMS),101)
         }
         if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SEND_SMS),101)
-        }
-        if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_PHONE_STATE),101)
         }
     }
 }
